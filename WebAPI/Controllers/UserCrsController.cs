@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebAPI.Models;
+using WebAPI.Helpers;
 
 namespace WebAPI.Controllers
 {
@@ -80,19 +81,24 @@ namespace WebAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/UserCrs
+        // POST: api/UserCrs/register
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [Route("register")]
         public async Task<ActionResult<UserCr>> PostUserCr(UserCr userCr)
         {
-          if (_context.UserCrs == null)
+            var dbUser= _context.UserCrs.Where(u=> u.Email == userCr.Email).FirstOrDefault();
+
+          if (dbUser != null)
           {
-              return Problem("Entity set 'caribbeanrentContext.UserCrs'  is null.");
+              return BadRequest("User already exists with this email");
           }
+            userCr.Password=Password.HashPassword(userCr.Password);
+
             _context.UserCrs.Add(userCr);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUserCr", new { id = userCr.Uid }, userCr);
+            return Ok("Successfully registered");
         }
 
         // DELETE: api/UserCrs/5
