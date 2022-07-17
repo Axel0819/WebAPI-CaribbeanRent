@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using WebAPI.Models;
 
 var builder = WebApplication.CreateBuilder(args);
+var myCors = "_myAllowOrigins";
 
 // Add services to the container.
 
@@ -16,6 +17,15 @@ builder.Services.AddDbContext<caribbeanrentContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("caribbeanrentContext"));
 });
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: myCors,
+                      policy =>
+                      {
+                          policy.AllowAnyOrigin()
+                          .AllowAnyHeader().AllowAnyMethod();
+                      });
+});
 
 var app = builder.Build();
 
@@ -27,6 +37,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors(myCors);
 
 app.UseAuthorization();
 
