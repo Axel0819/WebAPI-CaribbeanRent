@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace WebAPI.Models
 {
@@ -17,7 +18,9 @@ namespace WebAPI.Models
         public DateTime DateCreated { get; set; }
         public string Description { get; set; } = null!;
 
+        [JsonIgnore]
         public virtual UserCr UidNavigation { get; set; } = null!;
+        [JsonIgnore]
         public virtual ICollection<RoomiePostService> RoomiePostServices { get; set; }
     }
 }

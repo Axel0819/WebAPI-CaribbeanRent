@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using WebAPI.Models;
 
@@ -16,6 +17,11 @@ builder.Services.AddDbContext<caribbeanrentContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("caribbeanrentContext"));
 });
+
+// mapper
+IMapper mapper = WebAPI.MappingConfig.RegisterMaps().CreateMapper();
+builder.Services.AddSingleton(mapper);
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddCors(options =>
 {

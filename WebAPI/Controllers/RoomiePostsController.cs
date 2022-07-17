@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebAPI.Models;
+using WebAPI.Models.DTO;
 
 namespace WebAPI.Controllers
 {
@@ -14,10 +16,12 @@ namespace WebAPI.Controllers
     public class RoomiePostsController : ControllerBase
     {
         private readonly caribbeanrentContext _context;
+        private readonly IMapper _mapper;
 
-        public RoomiePostsController(caribbeanrentContext context)
+        public RoomiePostsController(caribbeanrentContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: api/RoomiePosts
@@ -83,8 +87,9 @@ namespace WebAPI.Controllers
         // POST: api/RoomiePosts
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<RoomiePost>> PostRoomiePost(RoomiePost roomiePost)
+        public async Task<ActionResult<RoomiePost>> PostRoomiePost(RoomiePostDTO roomiePostDTO)
         {
+            RoomiePost roomiePost = _mapper.Map<RoomiePostDTO, RoomiePost>(roomiePostDTO);
             var dateCreated = DateTime.Now;
           if (_context.RoomiePosts == null)
           {
