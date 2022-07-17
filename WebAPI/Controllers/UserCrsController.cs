@@ -34,7 +34,7 @@ namespace WebAPI.Controllers
 
         // GET: api/UserCrs/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<UserCr>> GetUserCr(Guid id)
+        public async Task<ActionResult<UserCr>> GetUserCr(int id)
         {
             if (_context.UserCrs == null)
             {
@@ -53,7 +53,7 @@ namespace WebAPI.Controllers
         // PUT: api/UserCrs/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUserCr(Guid id, UserCr userCr)
+        public async Task<IActionResult> PutUserCr(int id, UserCr userCr)
         {
             if (id != userCr.Uid)
             {
@@ -121,7 +121,7 @@ namespace WebAPI.Controllers
             return NoContent();
         }
 
-        private bool UserCrExists(Guid id)
+        private bool UserCrExists(int id)
         {
             return (_context.UserCrs?.Any(e => e.Uid == id)).GetValueOrDefault();
         }

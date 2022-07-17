@@ -8,7 +8,6 @@ namespace WebAPI.Models
         public RentPost()
         {
             Favorites = new HashSet<Favorite>();
-            Images = new HashSet<Image>();
             RentPostServices = new HashSet<RentPostService>();
             RentRules = new HashSet<RentRule>();
             ReportRentPosts = new HashSet<ReportRentPost>();
@@ -16,7 +15,7 @@ namespace WebAPI.Models
         }
 
         public int IdrentPost { get; set; }
-        public Guid Uid { get; set; }
+        public int Uid { get; set; }
         public decimal Price { get; set; }
         public int State { get; set; }
         public DateTime DateCreated { get; set; }
@@ -26,7 +25,6 @@ namespace WebAPI.Models
 
         public virtual UserCr UidNavigation { get; set; } = null!;
         public virtual ICollection<Favorite> Favorites { get; set; }
-        public virtual ICollection<Image> Images { get; set; }
         public virtual ICollection<RentPostService> RentPostServices { get; set; }
         public virtual ICollection<RentRule> RentRules { get; set; }
         public virtual ICollection<ReportRentPost> ReportRentPosts { get; set; }

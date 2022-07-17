@@ -6,7 +6,7 @@ namespace WebAPI.Models
     public partial class Favorite
     {
         public int Idfavorite { get; set; }
-        public Guid Uid { get; set; }
+        public int Uid { get; set; }
         public int IdrentPost { get; set; }
 
         public virtual RentPost IdrentPostNavigation { get; set; } = null!;

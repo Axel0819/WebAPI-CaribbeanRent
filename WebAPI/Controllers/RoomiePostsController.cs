@@ -85,10 +85,13 @@ namespace WebAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<RoomiePost>> PostRoomiePost(RoomiePost roomiePost)
         {
+            var dateCreated = DateTime.Now;
           if (_context.RoomiePosts == null)
           {
               return Problem("Entity set 'caribbeanrentContext.RoomiePosts'  is null.");
           }
+            roomiePost.DateCreated = dateCreated;
+
             _context.RoomiePosts.Add(roomiePost);
             await _context.SaveChangesAsync();
 

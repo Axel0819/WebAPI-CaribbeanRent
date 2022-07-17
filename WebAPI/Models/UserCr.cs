@@ -14,7 +14,7 @@ namespace WebAPI.Models
             RoomiePosts = new HashSet<RoomiePost>();
         }
 
-        public Guid Uid { get; set; }
+        public int Uid { get; set; }
         public string Email { get; set; } = null!;
         public string Password { get; set; } = null!;
         public int Role { get; set; }

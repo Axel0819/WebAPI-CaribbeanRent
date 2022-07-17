@@ -37,7 +37,7 @@ namespace WebAPI.Controllers
 
                 if (dbUser == null)
                 {
-                    return BadRequest("Username or password is incorrect");
+                    return BadRequest("Email or password is incorrect");
                 }
                 string token = CreateToken(dbUser);
 

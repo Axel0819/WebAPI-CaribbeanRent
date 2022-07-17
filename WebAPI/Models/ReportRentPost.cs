@@ -7,7 +7,7 @@ namespace WebAPI.Models
     {
         public int Idreport { get; set; }
         public int IdrentPost { get; set; }
-        public string Uidfrom { get; set; } = null!;
+        public int Uidfrom { get; set; }
         public DateTime DateCreated { get; set; }
         public string Description { get; set; } = null!;
 
