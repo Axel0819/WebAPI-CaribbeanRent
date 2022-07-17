@@ -3,14 +3,14 @@ using System.Collections.Generic;
 
 namespace WebAPI.Models
 {
-    public partial class RoommiePost
+    public partial class RoomiePost
     {
-        public RoommiePost()
+        public RoomiePost()
         {
-            RoommiePostServices = new HashSet<RoommiePostService>();
+            RoomiePostServices = new HashSet<RoomiePostService>();
         }
 
-        public int IdroommiePost { get; set; }
+        public int IdroomiePost { get; set; }
         public Guid Uid { get; set; }
         public int Room { get; set; }
         public string Ubication { get; set; } = null!;
@@ -18,6 +18,6 @@ namespace WebAPI.Models
         public string Description { get; set; } = null!;
 
         public virtual UserCr UidNavigation { get; set; } = null!;
-        public virtual ICollection<RoommiePostService> RoommiePostServices { get; set; }
+        public virtual ICollection<RoomiePostService> RoomiePostServices { get; set; }
     }
 }

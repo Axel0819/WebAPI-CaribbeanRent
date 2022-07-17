@@ -11,7 +11,7 @@ namespace WebAPI.Models
             Favorites = new HashSet<Favorite>();
             InfoUsers = new HashSet<InfoUser>();
             RentPosts = new HashSet<RentPost>();
-            RoommiePosts = new HashSet<RoommiePost>();
+            RoomiePosts = new HashSet<RoomiePost>();
         }
 
         public Guid Uid { get; set; }
@@ -24,6 +24,6 @@ namespace WebAPI.Models
         public virtual ICollection<Favorite> Favorites { get; set; }
         public virtual ICollection<InfoUser> InfoUsers { get; set; }
         public virtual ICollection<RentPost> RentPosts { get; set; }
-        public virtual ICollection<RoommiePost> RoommiePosts { get; set; }
+        public virtual ICollection<RoomiePost> RoomiePosts { get; set; }
     }
 }

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace WebAPI.Models
 {
-    public partial class SpecificationRentPo
+    public partial class SpecificationRentPost
     {
-        public int IdspecificationRentPos { get; set; }
+        public int IdspecificationRentPost { get; set; }
         public int IdrentPost { get; set; }
         public int NumBedrooms { get; set; }
         public int NumToilets { get; set; }

@@ -16,6 +16,7 @@ builder.Services.AddDbContext<caribbeanrentContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("caribbeanrentContext"));
 });
 
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

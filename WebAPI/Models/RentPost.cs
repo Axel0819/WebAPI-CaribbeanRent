@@ -12,7 +12,7 @@ namespace WebAPI.Models
             RentPostServices = new HashSet<RentPostService>();
             RentRules = new HashSet<RentRule>();
             ReportRentPosts = new HashSet<ReportRentPost>();
-            SpecificationRentPos = new HashSet<SpecificationRentPo>();
+            SpecificationRentPosts = new HashSet<SpecificationRentPost>();
         }
 
         public int IdrentPost { get; set; }
@@ -30,6 +30,6 @@ namespace WebAPI.Models
         public virtual ICollection<RentPostService> RentPostServices { get; set; }
         public virtual ICollection<RentRule> RentRules { get; set; }
         public virtual ICollection<ReportRentPost> ReportRentPosts { get; set; }
-        public virtual ICollection<SpecificationRentPo> SpecificationRentPos { get; set; }
+        public virtual ICollection<SpecificationRentPost> SpecificationRentPosts { get; set; }
     }
 }

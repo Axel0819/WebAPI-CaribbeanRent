@@ -39,11 +39,11 @@ namespace WebAPI.Controllers
                 {
                     return BadRequest("Username or password is incorrect");
                 }
-                string token= CreateToken(dbUser);
+                string token = CreateToken(dbUser);
 
                 return Ok(token);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -53,6 +53,7 @@ namespace WebAPI.Controllers
         {
             List<Claim> claims = new List<Claim>
             {
+                new Claim("id", Convert.ToString(user.Uid)),
                 new Claim("Email", user.Email),
                 new Claim("Role", Convert.ToString(user.Role))
             };

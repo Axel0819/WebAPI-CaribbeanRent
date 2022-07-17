@@ -25,10 +25,10 @@ namespace WebAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserCr>>> GetUserCrs()
         {
-          if (_context.UserCrs == null)
-          {
-              return NotFound();
-          }
+            if (_context.UserCrs == null)
+            {
+                return NotFound();
+            }
             return await _context.UserCrs.ToListAsync();
         }
 
@@ -36,10 +36,10 @@ namespace WebAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<UserCr>> GetUserCr(Guid id)
         {
-          if (_context.UserCrs == null)
-          {
-              return NotFound();
-          }
+            if (_context.UserCrs == null)
+            {
+                return NotFound();
+            }
             var userCr = await _context.UserCrs.FindAsync(id);
 
             if (userCr == null)
@@ -87,13 +87,13 @@ namespace WebAPI.Controllers
         [Route("register")]
         public async Task<ActionResult<UserCr>> PostUserCr(UserCr userCr)
         {
-            var dbUser= _context.UserCrs.Where(u=> u.Email == userCr.Email).FirstOrDefault();
+            var dbUser = _context.UserCrs.Where(u => u.Email == userCr.Email).FirstOrDefault();
 
-          if (dbUser != null)
-          {
-              return BadRequest("User already exists with this email");
-          }
-            userCr.Password=Password.HashPassword(userCr.Password);
+            if (dbUser != null)
+            {
+                return BadRequest("User already exists with this email");
+            }
+            userCr.Password = Password.HashPassword(userCr.Password);
 
             _context.UserCrs.Add(userCr);
             await _context.SaveChangesAsync();

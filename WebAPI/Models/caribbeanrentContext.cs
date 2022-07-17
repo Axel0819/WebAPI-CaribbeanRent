@@ -24,28 +24,19 @@ namespace WebAPI.Models
         public virtual DbSet<RentPostService> RentPostServices { get; set; } = null!;
         public virtual DbSet<RentRule> RentRules { get; set; } = null!;
         public virtual DbSet<ReportRentPost> ReportRentPosts { get; set; } = null!;
-        public virtual DbSet<RoommiePost> RoommiePosts { get; set; } = null!;
-        public virtual DbSet<RoommiePostService> RoommiePostServices { get; set; } = null!;
+        public virtual DbSet<RoomiePost> RoomiePosts { get; set; } = null!;
+        public virtual DbSet<RoomiePostService> RoomiePostServices { get; set; } = null!;
         public virtual DbSet<RuleCr> RuleCrs { get; set; } = null!;
         public virtual DbSet<Service> Services { get; set; } = null!;
-        public virtual DbSet<SpecificationRentPo> SpecificationRentPos { get; set; } = null!;
+        public virtual DbSet<SpecificationRentPost> SpecificationRentPosts { get; set; } = null!;
         public virtual DbSet<UserCr> UserCrs { get; set; } = null!;
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=caribbeanrent.database.windows.net; Database=caribbeanrent; User ID=caribbean;Password=cariProject$;");
-            }
-        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Contact>(entity =>
             {
                 entity.HasKey(e => e.Idcontact)
-                    .HasName("PK__Contact__6A51F489E682EE6E");
+                    .HasName("PK__Contact__6A51F489BE06DFE3");
 
                 entity.ToTable("Contact");
 
@@ -70,7 +61,7 @@ namespace WebAPI.Models
             modelBuilder.Entity<Favorite>(entity =>
             {
                 entity.HasKey(e => e.Idfavorite)
-                    .HasName("PK__Favorite__32FAC67A4C727B50");
+                    .HasName("PK__Favorite__32FAC67A5791C489");
 
                 entity.ToTable("Favorite");
 
@@ -96,7 +87,7 @@ namespace WebAPI.Models
             modelBuilder.Entity<Image>(entity =>
             {
                 entity.HasKey(e => e.Idimage)
-                    .HasName("PK__Image__365310E891D2C955");
+                    .HasName("PK__Image__365310E881DA504B");
 
                 entity.ToTable("Image");
 
@@ -107,7 +98,7 @@ namespace WebAPI.Models
                 entity.Property(e => e.IdrentPost).HasColumnName("IDRentPost");
 
                 entity.Property(e => e.Urlimage)
-                    .HasMaxLength(40)
+                    .HasMaxLength(200)
                     .IsUnicode(false)
                     .HasColumnName("URLImage");
 
@@ -121,7 +112,7 @@ namespace WebAPI.Models
             modelBuilder.Entity<InfoUser>(entity =>
             {
                 entity.HasKey(e => e.IdinfoUser)
-                    .HasName("PK__InfoUser__D35F93424FDDE51A");
+                    .HasName("PK__InfoUser__D35F9342B59EEABD");
 
                 entity.ToTable("InfoUser");
 
@@ -129,24 +120,24 @@ namespace WebAPI.Models
                     .HasColumnName("IDInfoUser")
                     .HasDefaultValueSql("(newid())");
 
-                entity.Property(e => e.DateCreated).HasColumnType("date");
+                entity.Property(e => e.DateCreated).HasColumnType("datetime");
 
                 entity.Property(e => e.Description)
-                    .HasMaxLength(40)
+                    .HasMaxLength(100)
                     .IsUnicode(false);
 
                 entity.Property(e => e.FirstName)
-                    .HasMaxLength(20)
+                    .HasMaxLength(30)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Name)
-                    .HasMaxLength(20)
+                    .HasMaxLength(30)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Uid).HasColumnName("UID");
 
                 entity.Property(e => e.UrlPhoto)
-                    .HasMaxLength(40)
+                    .HasMaxLength(100)
                     .IsUnicode(false);
 
                 entity.HasOne(d => d.UidNavigation)
@@ -159,7 +150,7 @@ namespace WebAPI.Models
             modelBuilder.Entity<RentPost>(entity =>
             {
                 entity.HasKey(e => e.IdrentPost)
-                    .HasName("PK__RentPost__E70CAE7AB1FF1508");
+                    .HasName("PK__RentPost__E70CAE7AD912FF13");
 
                 entity.ToTable("RentPost");
 
@@ -171,14 +162,12 @@ namespace WebAPI.Models
 
                 entity.Property(e => e.DateCreated).HasColumnType("datetime");
 
-                entity.Property(e => e.Description)
-                    .HasMaxLength(40)
-                    .IsUnicode(false);
+                entity.Property(e => e.Description).HasColumnType("text");
 
                 entity.Property(e => e.Price).HasColumnType("decimal(18, 0)");
 
                 entity.Property(e => e.Title)
-                    .HasMaxLength(20)
+                    .HasMaxLength(80)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Uid).HasColumnName("UID");
@@ -193,7 +182,7 @@ namespace WebAPI.Models
             modelBuilder.Entity<RentPostService>(entity =>
             {
                 entity.HasKey(e => e.IdrentService)
-                    .HasName("PK__RentPost__9EA8144DC8B30DC4");
+                    .HasName("PK__RentPost__9EA8144DBF2191F2");
 
                 entity.ToTable("RentPostService");
 
@@ -219,7 +208,7 @@ namespace WebAPI.Models
             modelBuilder.Entity<RentRule>(entity =>
             {
                 entity.HasKey(e => e.IdrentRule)
-                    .HasName("PK__RentRule__5554434FFA45808C");
+                    .HasName("PK__RentRule__5554434FD54B34DE");
 
                 entity.ToTable("RentRule");
 
@@ -245,7 +234,7 @@ namespace WebAPI.Models
             modelBuilder.Entity<ReportRentPost>(entity =>
             {
                 entity.HasKey(e => e.Idreport)
-                    .HasName("PK__ReportRe__0E6517A19ACDED61");
+                    .HasName("PK__ReportRe__0E6517A15B3044FE");
 
                 entity.ToTable("ReportRentPost");
 
@@ -269,62 +258,62 @@ namespace WebAPI.Models
                     .HasConstraintName("fk_rentPost_reportRentPost");
             });
 
-            modelBuilder.Entity<RoommiePost>(entity =>
+            modelBuilder.Entity<RoomiePost>(entity =>
             {
-                entity.HasKey(e => e.IdroommiePost)
-                    .HasName("PK__RoommieP__558A94F02FD5E790");
+                entity.HasKey(e => e.IdroomiePost)
+                    .HasName("PK__RoomiePo__5A1DC6D8648623EB");
 
-                entity.ToTable("RoommiePost");
+                entity.ToTable("RoomiePost");
 
-                entity.Property(e => e.IdroommiePost).HasColumnName("IDRoommiePost");
+                entity.Property(e => e.IdroomiePost).HasColumnName("IDRoomiePost");
 
                 entity.Property(e => e.DateCreated).HasColumnType("datetime");
 
                 entity.Property(e => e.Description).HasColumnType("text");
 
                 entity.Property(e => e.Ubication)
-                    .HasMaxLength(40)
+                    .HasMaxLength(100)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Uid).HasColumnName("UID");
 
                 entity.HasOne(d => d.UidNavigation)
-                    .WithMany(p => p.RoommiePosts)
+                    .WithMany(p => p.RoomiePosts)
                     .HasForeignKey(d => d.Uid)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_userCR_roommiePost");
+                    .HasConstraintName("fk_userCR_roomiePost");
             });
 
-            modelBuilder.Entity<RoommiePostService>(entity =>
+            modelBuilder.Entity<RoomiePostService>(entity =>
             {
-                entity.HasKey(e => e.IdroommieService)
-                    .HasName("PK__RoommieP__D77A2F983D0C4F0C");
+                entity.HasKey(e => e.IdroomieService)
+                    .HasName("PK__RoomiePo__6A609FCF0126FCD5");
 
-                entity.ToTable("RoommiePostService");
+                entity.ToTable("RoomiePostService");
 
-                entity.Property(e => e.IdroommieService).HasColumnName("IDRoommieService");
+                entity.Property(e => e.IdroomieService).HasColumnName("IDRoomieService");
 
-                entity.Property(e => e.IdroommiePost).HasColumnName("IDRoommiePost");
+                entity.Property(e => e.IdroomiePost).HasColumnName("IDRoomiePost");
 
                 entity.Property(e => e.Idservice).HasColumnName("IDService");
 
-                entity.HasOne(d => d.IdroommiePostNavigation)
-                    .WithMany(p => p.RoommiePostServices)
-                    .HasForeignKey(d => d.IdroommiePost)
+                entity.HasOne(d => d.IdroomiePostNavigation)
+                    .WithMany(p => p.RoomiePostServices)
+                    .HasForeignKey(d => d.IdroomiePost)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_roomiePost_rommiePostService");
+                    .HasConstraintName("fk_roomiePost_roomiePostService");
 
                 entity.HasOne(d => d.IdserviceNavigation)
-                    .WithMany(p => p.RoommiePostServices)
+                    .WithMany(p => p.RoomiePostServices)
                     .HasForeignKey(d => d.Idservice)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_service_roommiePostService");
+                    .HasConstraintName("fk_service_roomiePostService");
             });
 
             modelBuilder.Entity<RuleCr>(entity =>
             {
                 entity.HasKey(e => e.Idrule)
-                    .HasName("PK__RuleCR__A42F545DC2CCA393");
+                    .HasName("PK__RuleCR__A42F545DB32C2B38");
 
                 entity.ToTable("RuleCR");
 
@@ -338,30 +327,32 @@ namespace WebAPI.Models
             modelBuilder.Entity<Service>(entity =>
             {
                 entity.HasKey(e => e.Idservice)
-                    .HasName("PK__Service__5049E73A50AA860F");
+                    .HasName("PK__Service__5049E73A26332E82");
 
                 entity.ToTable("Service");
 
                 entity.Property(e => e.Idservice).HasColumnName("IDService");
 
                 entity.Property(e => e.Name)
-                    .HasMaxLength(40)
+                    .HasMaxLength(80)
                     .IsUnicode(false);
             });
 
-            modelBuilder.Entity<SpecificationRentPo>(entity =>
+            modelBuilder.Entity<SpecificationRentPost>(entity =>
             {
-                entity.HasKey(e => e.IdspecificationRentPos)
-                    .HasName("PK__Specific__DF81AD3F765B3477");
+                entity.HasKey(e => e.IdspecificationRentPost)
+                    .HasName("PK__Specific__EA01AEBC3D2C3B89");
 
-                entity.Property(e => e.IdspecificationRentPos).HasColumnName("IDSpecificationRentPos");
+                entity.ToTable("SpecificationRentPost");
+
+                entity.Property(e => e.IdspecificationRentPost).HasColumnName("IDSpecificationRentPost");
 
                 entity.Property(e => e.IdrentPost).HasColumnName("IDRentPost");
 
                 entity.Property(e => e.Price).HasColumnType("decimal(18, 0)");
 
                 entity.HasOne(d => d.IdrentPostNavigation)
-                    .WithMany(p => p.SpecificationRentPos)
+                    .WithMany(p => p.SpecificationRentPosts)
                     .HasForeignKey(d => d.IdrentPost)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_rentPost_infoUser");
@@ -370,7 +361,7 @@ namespace WebAPI.Models
             modelBuilder.Entity<UserCr>(entity =>
             {
                 entity.HasKey(e => e.Uid)
-                    .HasName("PK__UserCR__C5B19602F2CC3B82");
+                    .HasName("PK__UserCR__C5B196021AB30FA2");
 
                 entity.ToTable("UserCR");
 
@@ -379,11 +370,11 @@ namespace WebAPI.Models
                     .HasDefaultValueSql("(newid())");
 
                 entity.Property(e => e.Email)
-                    .HasMaxLength(20)
+                    .HasMaxLength(50)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Password)
-                    .HasMaxLength(10)
+                    .HasMaxLength(60)
                     .IsUnicode(false);
             });
 

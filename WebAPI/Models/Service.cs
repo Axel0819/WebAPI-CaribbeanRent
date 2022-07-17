@@ -8,13 +8,13 @@ namespace WebAPI.Models
         public Service()
         {
             RentPostServices = new HashSet<RentPostService>();
-            RoommiePostServices = new HashSet<RoommiePostService>();
+            RoomiePostServices = new HashSet<RoomiePostService>();
         }
 
         public int Idservice { get; set; }
         public string Name { get; set; } = null!;
 
         public virtual ICollection<RentPostService> RentPostServices { get; set; }
-        public virtual ICollection<RoommiePostService> RoommiePostServices { get; set; }
+        public virtual ICollection<RoomiePostService> RoomiePostServices { get; set; }
     }
 }
