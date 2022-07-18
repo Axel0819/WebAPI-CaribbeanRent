@@ -17,10 +17,10 @@ namespace WebAPI.Models
         public string Ubication { get; set; } = null!;
         public DateTime DateCreated { get; set; }
         public string Description { get; set; } = null!;
+        public DateTime? UpdatePost { get; set; }
 
         [JsonIgnore]
         public virtual UserCr UidNavigation { get; set; } = null!;
-        [JsonIgnore]
         public virtual ICollection<RoomiePostService> RoomiePostServices { get; set; }
     }
 }

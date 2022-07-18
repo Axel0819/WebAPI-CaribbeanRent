@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text.Json.Serialization;
-
-namespace WebAPI.Models
+﻿namespace WebAPI.Models.DTO
 {
-    public partial class InfoUser
+    public class InfoUserDTO
     {
         public int IdinfoUser { get; set; }
         public int Uid { get; set; }
@@ -16,8 +12,5 @@ namespace WebAPI.Models
         public DateTime DateCreated { get; set; }
         public string UrlPhoto { get; set; } = null!;
         public DateTime? UpdateInfo { get; set; }
-
-        [JsonIgnore]
-        public virtual UserCr UidNavigation { get; set; } = null!;
     }
 }

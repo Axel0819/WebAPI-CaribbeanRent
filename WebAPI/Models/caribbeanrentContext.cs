@@ -110,6 +110,8 @@ namespace WebAPI.Models
 
                 entity.Property(e => e.Uid).HasColumnName("UID");
 
+                entity.Property(e => e.UpdateInfo).HasColumnType("datetime");
+
                 entity.Property(e => e.UrlPhoto)
                     .HasMaxLength(100)
                     .IsUnicode(false);
@@ -247,13 +249,14 @@ namespace WebAPI.Models
                     .IsUnicode(false);
 
                 entity.Property(e => e.Uid).HasColumnName("UID");
-                
+
+                entity.Property(e => e.UpdatePost).HasColumnType("datetime");
+
                 entity.HasOne(d => d.UidNavigation)
                     .WithMany(p => p.RoomiePosts)
                     .HasForeignKey(d => d.Uid)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_userCR_roomiePost")
-                    .IsRequired(false);
+                    .HasConstraintName("fk_userCR_roomiePost");
             });
 
             modelBuilder.Entity<RoomiePostService>(entity =>

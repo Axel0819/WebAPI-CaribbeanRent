@@ -56,13 +56,16 @@ namespace WebAPI.Controllers
         // PUT: api/RoomiePosts/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutRoomiePost(int id, RoomiePost roomiePost)
+        public async Task<IActionResult> PutRoomiePost(int id, RoomiePostDTO roomiePostDTO)
         {
+            RoomiePost roomiePost = _mapper.Map<RoomiePostDTO, RoomiePost>(roomiePostDTO);
+            var updatePost = DateTime.Now;
             if (id != roomiePost.IdroomiePost)
             {
                 return BadRequest();
             }
-
+            roomiePost.DateCreated = roomiePost.DateCreated;
+            roomiePost.UpdatePost = updatePost;
             _context.Entry(roomiePost).State = EntityState.Modified;
 
             try
@@ -86,7 +89,7 @@ namespace WebAPI.Controllers
 
         // POST: api/RoomiePosts
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
+        [HttpPost] 
         public async Task<ActionResult<RoomiePost>> PostRoomiePost(RoomiePostDTO roomiePostDTO)
         {
             RoomiePost roomiePost = _mapper.Map<RoomiePostDTO, RoomiePost>(roomiePostDTO);
@@ -96,6 +99,7 @@ namespace WebAPI.Controllers
               return Problem("Entity set 'caribbeanrentContext.RoomiePosts'  is null.");
           }
             roomiePost.DateCreated = dateCreated;
+            roomiePost.UpdatePost = dateCreated;
 
             _context.RoomiePosts.Add(roomiePost);
             await _context.SaveChangesAsync();

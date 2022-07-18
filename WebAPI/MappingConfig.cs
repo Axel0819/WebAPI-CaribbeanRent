@@ -14,7 +14,16 @@ namespace WebAPI
                 config.CreateMap<RoomiePostDTO, RoomiePost>();
                 config.CreateMap<RoomiePost, RoomiePostDTO>();
 
-                // otros...
+
+                //RoomiePostService
+                config.CreateMap<RoomiePostService, RoomiePostServiceDTO>();
+                config.CreateMap<RoomiePostServiceDTO, RoomiePostService>();
+
+                // InfoUser
+                config.CreateMap<InfoUser, InfoUserDTO>();
+                config.CreateMap<InfoUserDTO, InfoUser>();
+
+                //Contact
             });
 
             return mappingConfig;

@@ -8,5 +8,6 @@
         public string Ubication { get; set; } = null!;
         public DateTime DateCreated { get; set; }
         public string Description { get; set; } = null!;
+        public DateTime? UpdatePost { get; set; }
     }
 }

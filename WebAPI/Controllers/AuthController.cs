@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.Helpers;
 using WebAPI.Models;
+using WebAPI.Models.DTO;
 using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -14,11 +15,13 @@ namespace WebAPI.Controllers
     {
         private readonly caribbeanrentContext _context;
         private readonly IConfiguration _configuration;
+        protected TokenDTO _tokenDTO; 
 
         public AuthController(caribbeanrentContext context, IConfiguration configuration)
         {
             _configuration = configuration;
             _context = context;
+            _tokenDTO = new TokenDTO();
         }
 
         public IConfiguration Configuration { get; }
@@ -41,7 +44,11 @@ namespace WebAPI.Controllers
                 }
                 string token = CreateToken(dbUser);
 
-                return Ok(token);
+                _tokenDTO.Token = token;
+                _tokenDTO.Rol = dbUser.Role;
+                _tokenDTO.Id = dbUser.Uid;
+
+                return Ok(_tokenDTO);
             }
             catch (Exception ex)
             {
