@@ -26,6 +26,10 @@ namespace WebAPI
                 //Contact
                 config.CreateMap<Contact, ContactDTO>();
                 config.CreateMap<ContactDTO, Contact>();
+
+                //UserCr
+                config.CreateMap<UserCr, UserCrDTO>();
+                config.CreateMap<UserCrDTO, UserCr>();
             });
 
             return mappingConfig;

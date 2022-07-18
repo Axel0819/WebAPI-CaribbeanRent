@@ -1,9 +1,13 @@
 using AutoMapper;
+using Azure.Storage.Blobs;
 using Microsoft.EntityFrameworkCore;
 using WebAPI.Models;
 
 var builder = WebApplication.CreateBuilder(args);
+
 var myCors = "_myAllowOrigins";
+var azureKeys = builder.Configuration.GetConnectionString("azureStorageKeys");
+BlobServiceClient blobService=new BlobServiceClient(azureKeys);
 
 // Add services to the container.
 
@@ -13,10 +17,14 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//BD Service
 builder.Services.AddDbContext<caribbeanrentContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("caribbeanrentContext"));
 });
+
+builder.Services.AddTransient<BlobServiceClient>(x => blobService);
+//builder.Services.AddTransient<ServiceStorageBlobs>();
 
 // mapper
 IMapper mapper = WebAPI.MappingConfig.RegisterMaps().CreateMapper();

@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebAPI.Models;
 using WebAPI.Helpers;
+using WebAPI.Models.DTO;
 
 namespace WebAPI.Controllers
 {
@@ -15,10 +17,12 @@ namespace WebAPI.Controllers
     public class UserCrsController : ControllerBase
     {
         private readonly caribbeanrentContext _context;
+        private readonly IMapper _mapper;
 
-        public UserCrsController(caribbeanrentContext context)
+        public UserCrsController(caribbeanrentContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: api/UserCrs
@@ -59,6 +63,7 @@ namespace WebAPI.Controllers
             {
                 return BadRequest();
             }
+            userCr.Password = Password.HashPassword(userCr.Password);
 
             _context.Entry(userCr).State = EntityState.Modified;
 
@@ -85,8 +90,13 @@ namespace WebAPI.Controllers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         [Route("register")]
-        public async Task<ActionResult<UserCr>> PostUserCr(UserCr userCr)
+        public async Task<ActionResult<UserCr>> PostUserCr(UserCrDTO userCrDTO)
         {
+            UserCr userCr = _mapper.Map<UserCrDTO, UserCr>(userCrDTO);
+
+            var infoUserDTO = new InfoUserDTO();
+            var infoUser = new InfoUsersController(_context,_mapper);
+
             var dbUser = _context.UserCrs.Where(u => u.Email == userCr.Email).FirstOrDefault();
 
             if (dbUser != null)
@@ -94,16 +104,28 @@ namespace WebAPI.Controllers
                 return BadRequest("User already exists with this email");
             }
             userCr.Password = Password.HashPassword(userCr.Password);
+            userCr.State = 1;
 
-            _context.UserCrs.Add(userCr);
+            var userCreated= _context.UserCrs.Add(userCr);
+
             await _context.SaveChangesAsync();
 
-            return Ok("Successfully registered");
+            infoUserDTO.Uid = userCreated.Entity.Uid;
+            infoUserDTO.Name = userCrDTO.Name;
+            infoUserDTO.FirstSurname = userCrDTO.FirstSurname;
+            infoUserDTO.SecondSurname = userCrDTO.SecondSurname;
+            infoUserDTO.Description = "";
+            infoUserDTO.Age = 0;
+            infoUserDTO.UrlPhoto = "";
+
+            await infoUser.PostInfoUser(infoUserDTO);
+
+            return Ok($"Successfully registered");
         }
 
         // DELETE: api/UserCrs/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUserCr(Guid id)
+        public async Task<IActionResult> DeleteUserCr(int id)
         {
             if (_context.UserCrs == null)
             {
