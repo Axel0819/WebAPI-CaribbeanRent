@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace WebAPI.Models
 {
@@ -9,6 +10,7 @@ namespace WebAPI.Models
         public int Uid { get; set; }
         public string Contact1 { get; set; } = null!;
 
+        [JsonIgnore]
         public virtual UserCr UidNavigation { get; set; } = null!;
     }
 }

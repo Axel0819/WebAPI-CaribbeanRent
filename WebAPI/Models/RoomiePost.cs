@@ -21,6 +21,7 @@ namespace WebAPI.Models
 
         [JsonIgnore]
         public virtual UserCr UidNavigation { get; set; } = null!;
+        [JsonIgnore]
         public virtual ICollection<RoomiePostService> RoomiePostServices { get; set; }
     }
 }

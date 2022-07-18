@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebAPI.Models;
+using WebAPI.Models.DTO;
 
 namespace WebAPI.Controllers
 {
@@ -14,10 +16,12 @@ namespace WebAPI.Controllers
     public class RoomiePostServicesController : ControllerBase
     {
         private readonly caribbeanrentContext _context;
+        private readonly IMapper _mapper;
 
-        public RoomiePostServicesController(caribbeanrentContext context)
+        public RoomiePostServicesController(caribbeanrentContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: api/RoomiePostServices
@@ -52,8 +56,10 @@ namespace WebAPI.Controllers
         // PUT: api/RoomiePostServices/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutRoomiePostService(int id, RoomiePostService roomiePostService)
+        public async Task<IActionResult> PutRoomiePostService(int id, RoomiePostServiceDTO roomiePostServiceDTO)
         {
+            RoomiePostService roomiePostService = _mapper.Map<RoomiePostServiceDTO, RoomiePostService>(roomiePostServiceDTO);
+
             if (id != roomiePostService.IdroomieService)
             {
                 return BadRequest();
@@ -83,9 +89,11 @@ namespace WebAPI.Controllers
         // POST: api/RoomiePostServices
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<RoomiePostService>> PostRoomiePostService(RoomiePostService roomiePostService)
+        public async Task<ActionResult<RoomiePostService>> PostRoomiePostService(RoomiePostServiceDTO roomiePostServiceDTO)
         {
-          if (_context.RoomiePostServices == null)
+            RoomiePostService roomiePostService = _mapper.Map<RoomiePostServiceDTO, RoomiePostService>(roomiePostServiceDTO);
+
+            if (_context.RoomiePostServices == null)
           {
               return Problem("Entity set 'caribbeanrentContext.RoomiePostServices'  is null.");
           }
