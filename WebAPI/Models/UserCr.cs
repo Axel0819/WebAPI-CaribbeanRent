@@ -21,6 +21,7 @@ namespace WebAPI.Models
         public int Role { get; set; }
         public int State { get; set; }
 
+
         [JsonIgnore]
         public virtual ICollection<Contact> Contacts { get; set; }
         [JsonIgnore]

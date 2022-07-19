@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace WebAPI.Models
 {
@@ -14,7 +15,9 @@ namespace WebAPI.Models
         public int Idservice { get; set; }
         public string Name { get; set; } = null!;
 
+        [JsonIgnore]
         public virtual ICollection<RentPostService> RentPostServices { get; set; }
+        [JsonIgnore]
         public virtual ICollection<RoomiePostService> RoomiePostServices { get; set; }
     }
 }

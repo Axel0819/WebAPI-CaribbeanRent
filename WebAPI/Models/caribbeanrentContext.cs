@@ -18,6 +18,7 @@ namespace WebAPI.Models
 
         public virtual DbSet<Contact> Contacts { get; set; } = null!;
         public virtual DbSet<Favorite> Favorites { get; set; } = null!;
+        public virtual DbSet<Image> Images { get; set; } = null!;
         public virtual DbSet<InfoUser> InfoUsers { get; set; } = null!;
         public virtual DbSet<RentPost> RentPosts { get; set; } = null!;
         public virtual DbSet<RentPostService> RentPostServices { get; set; } = null!;
@@ -79,6 +80,29 @@ namespace WebAPI.Models
                     .HasForeignKey(d => d.Uid)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_userCR_favorite");
+            });
+
+            modelBuilder.Entity<Image>(entity =>
+            {
+                entity.HasKey(e => e.Idimage)
+                    .HasName("PK__Image__365310E8FC9C9712");
+
+                entity.ToTable("Image");
+
+                entity.Property(e => e.Idimage).HasColumnName("IDImage");
+
+                entity.Property(e => e.IdrentPost).HasColumnName("IDRentPost");
+
+                entity.Property(e => e.Urlimage)
+                    .HasMaxLength(250)
+                    .IsUnicode(false)
+                    .HasColumnName("URLImage");
+
+                entity.HasOne(d => d.IdrentPostNavigation)
+                    .WithMany(p => p.Images)
+                    .HasForeignKey(d => d.IdrentPost)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_rentPost_image");
             });
 
             modelBuilder.Entity<InfoUser>(entity =>

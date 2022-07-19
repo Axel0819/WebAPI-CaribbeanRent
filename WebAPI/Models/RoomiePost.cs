@@ -19,6 +19,7 @@ namespace WebAPI.Models
         public string Description { get; set; } = null!;
         public DateTime? UpdatePost { get; set; }
 
+
         [JsonIgnore]
         public virtual UserCr UidNavigation { get; set; } = null!;
         [JsonIgnore]

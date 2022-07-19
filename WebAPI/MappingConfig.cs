@@ -30,6 +30,10 @@ namespace WebAPI
                 //UserCr
                 config.CreateMap<UserCr, UserCrDTO>();
                 config.CreateMap<UserCrDTO, UserCr>();
+
+                //Service
+                config.CreateMap<Service, ServiceDTO>();
+                config.CreateMap<ServiceDTO, Service>();
             });
 
             return mappingConfig;
