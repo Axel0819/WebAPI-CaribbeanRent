@@ -24,17 +24,13 @@ namespace WebAPI.Controllers
             _tokenDTO = new TokenDTO();
         }
 
-        public IConfiguration Configuration { get; }
-
         [HttpPost]
         [Route("login")]
         public IActionResult UserLogin(UserCr user)
         {
             try
             {
-                string password = Password.HashPassword(user.Password);
-
-                //.Select(u => new{u.Uid,u.Email,u.Role,u.State}).
+                string password = PasswordHelper.HashPassword(user.Password);
 
                 var dbUser = _context.UserCrs.Where(u => u.Email == user.Email && u.Password == password).FirstOrDefault();
 
@@ -42,6 +38,12 @@ namespace WebAPI.Controllers
                 {
                     return BadRequest("Email or password is incorrect");
                 }
+
+                if (dbUser.State == Convert.ToInt32(StateEnums.Inactive)) 
+                { 
+                    return Ok("Cuenta deshabilitada temporalmente");
+                }
+
                 string token = CreateToken(dbUser);
 
                 _tokenDTO.Token = token;

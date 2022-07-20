@@ -59,13 +59,13 @@ namespace WebAPI.Controllers
         public async Task<IActionResult> PutInfoUser(int id, InfoUserDTO infoUserDTO)
         {
             InfoUser infoUser = _mapper.Map<InfoUserDTO, InfoUser>(infoUserDTO);
-            var updateInfo = DateTime.Now;
+            var updatedInfo = DateTime.Now;
 
             if (id != infoUser.IdinfoUser)
             {
                 return BadRequest();
             }
-            infoUser.UpdateInfo = updateInfo;
+            infoUser.UpdateInfo = updatedInfo;
             _context.Entry(infoUser).State = EntityState.Modified;
 
             try

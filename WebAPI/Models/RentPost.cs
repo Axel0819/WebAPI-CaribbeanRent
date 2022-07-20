@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace WebAPI.Models
 {
@@ -24,12 +25,19 @@ namespace WebAPI.Models
         public string Description { get; set; } = null!;
         public string Coordinates { get; set; } = null!;
 
+        [JsonIgnore]
         public virtual UserCr UidNavigation { get; set; } = null!;
+        [JsonIgnore]
         public virtual ICollection<Favorite> Favorites { get; set; }
+        [JsonIgnore]
         public virtual ICollection<Image> Images { get; set; }
+        [JsonIgnore]
         public virtual ICollection<RentPostService> RentPostServices { get; set; }
+        [JsonIgnore]
         public virtual ICollection<RentRule> RentRules { get; set; }
+        [JsonIgnore]
         public virtual ICollection<ReportRentPost> ReportRentPosts { get; set; }
+        [JsonIgnore]
         public virtual ICollection<SpecificationRentPost> SpecificationRentPosts { get; set; }
     }
 }

@@ -93,11 +93,13 @@ namespace WebAPI.Controllers
         public async Task<ActionResult<RoomiePost>> PostRoomiePost(RoomiePostDTO roomiePostDTO)
         {
             RoomiePost roomiePost = _mapper.Map<RoomiePostDTO, RoomiePost>(roomiePostDTO);
-            var dateCreated = DateTime.Now;
+
           if (_context.RoomiePosts == null)
           {
               return Problem("Entity set 'caribbeanrentContext.RoomiePosts'  is null.");
           }
+            var dateCreated = DateTime.Now;
+
             roomiePost.DateCreated = dateCreated;
             roomiePost.UpdatePost = dateCreated;
 

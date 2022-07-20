@@ -63,7 +63,7 @@ namespace WebAPI.Controllers
             {
                 return BadRequest();
             }
-            userCr.Password = Password.HashPassword(userCr.Password);
+            userCr.Password = PasswordHelper.HashPassword(userCr.Password);
 
             _context.Entry(userCr).State = EntityState.Modified;
 
@@ -103,8 +103,8 @@ namespace WebAPI.Controllers
             {
                 return BadRequest("User already exists with this email");
             }
-            userCr.Password = Password.HashPassword(userCr.Password);
-            userCr.State = 1;
+            userCr.Password = PasswordHelper.HashPassword(userCr.Password);
+            userCr.State = Convert.ToInt32(StateEnums.Active);
 
             var userCreated= _context.UserCrs.Add(userCr);
 

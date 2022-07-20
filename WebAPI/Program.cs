@@ -2,6 +2,7 @@ using AutoMapper;
 using Azure.Storage.Blobs;
 using Microsoft.EntityFrameworkCore;
 using WebAPI.Models;
+using WebAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,7 +25,7 @@ builder.Services.AddDbContext<caribbeanrentContext>(options =>
 });
 
 builder.Services.AddTransient<BlobServiceClient>(x => blobService);
-//builder.Services.AddTransient<ServiceStorageBlobs>();
+builder.Services.AddTransient<ServiceStorageBlobs>();
 
 // mapper
 IMapper mapper = WebAPI.MappingConfig.RegisterMaps().CreateMapper();

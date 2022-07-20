@@ -14,7 +14,6 @@ namespace WebAPI
                 config.CreateMap<RoomiePostDTO, RoomiePost>();
                 config.CreateMap<RoomiePost, RoomiePostDTO>();
 
-
                 //RoomiePostService
                 config.CreateMap<RoomiePostService, RoomiePostServiceDTO>();
                 config.CreateMap<RoomiePostServiceDTO, RoomiePostService>();
@@ -31,9 +30,17 @@ namespace WebAPI
                 config.CreateMap<UserCr, UserCrDTO>();
                 config.CreateMap<UserCrDTO, UserCr>();
 
+                //Image
+                config.CreateMap<Image, ImageDTO>();
+                config.CreateMap<ImageDTO, Image>();
+
                 //Service
                 config.CreateMap<Service, ServiceDTO>();
                 config.CreateMap<ServiceDTO, Service>();
+
+                //RentPost
+                config.CreateMap<RentPost, RentPostDTO>();
+                config.CreateMap<RentPostDTO, RentPost>();
             });
 
             return mappingConfig;

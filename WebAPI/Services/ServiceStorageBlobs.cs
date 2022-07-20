@@ -14,18 +14,18 @@ namespace WebAPI.Services
         public async Task DeleteBlobAsync(string containerName, string blobName)
         {
             BlobContainerClient folder = _client.GetBlobContainerClient(containerName);
-            await folder.DeleteBlobAsync(blobName);
+            await folder.DeleteBlobIfExistsAsync(blobName, DeleteSnapshotsOption.None);
         }
 
         public async Task<List<string>> GetBlobsAsync(string containerName)
         {
             BlobContainerClient folder = _client.GetBlobContainerClient(containerName);
-            List<string> imagenes = new List<string>();
-            await foreach (BlobItem images in folder.GetBlobsAsync())
+            List<string> imagesList = new List<string>();
+            await foreach (BlobItem image in folder.GetBlobsAsync())
             {
-                imagenes.Add(images.Name);
+                imagesList.Add(image.Name);
             }
-            return imagenes;
+            return imagesList;
         }
 
         public async Task UploadBlobAsync(string containerName, string blobName, Stream stream)
@@ -34,5 +34,13 @@ namespace WebAPI.Services
             BlobClient blobClient = containerClient.GetBlobClient(blobName);
             await blobClient.UploadAsync(stream, overwrite: true);
         }
+
+        /*public async Task<bool> BlobExists(string containerName, string blobName)
+        {
+            BlobContainerClient folder = _client.GetBlobContainerClient(containerName);
+            return await folder.DeleteBlobIfExistsAsync(blobName,DeleteSnapshotsOption.None);
+            
+        }
+        */
     }
 }

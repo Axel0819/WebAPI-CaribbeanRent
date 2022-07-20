@@ -3,7 +3,7 @@ using System.Text;
 
 namespace WebAPI.Helpers
 {
-    public class Password
+    public class PasswordHelper
     {
         public static string HashPassword(string password)
         {
