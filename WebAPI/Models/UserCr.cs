@@ -22,15 +22,10 @@ namespace WebAPI.Models
         public int State { get; set; }
 
 
-        [JsonIgnore]
         public virtual ICollection<Contact> Contacts { get; set; }
-        [JsonIgnore]
         public virtual ICollection<Favorite> Favorites { get; set; }
-        [JsonIgnore]
         public virtual ICollection<InfoUser> InfoUsers { get; set; }
-        [JsonIgnore]
         public virtual ICollection<RentPost> RentPosts { get; set; }
-        [JsonIgnore]
         public virtual ICollection<RoomiePost> RoomiePosts { get; set; }
     }
 }

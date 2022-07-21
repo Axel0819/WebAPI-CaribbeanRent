@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace WebAPI.Models
 {
@@ -9,8 +10,8 @@ namespace WebAPI.Models
         public int IdrentPost { get; set; }
         public int NumBedrooms { get; set; }
         public int NumToilets { get; set; }
-        public decimal Price { get; set; }
 
+        [JsonIgnore]
         public virtual RentPost IdrentPostNavigation { get; set; } = null!;
     }
 }

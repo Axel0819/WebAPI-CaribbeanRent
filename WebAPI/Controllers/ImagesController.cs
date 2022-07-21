@@ -96,26 +96,26 @@ namespace WebAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<Image>> PostImage([FromForm] ImageDTO imageDTO)
         {
-            
-            Image image = _mapper.Map<ImageDTO, Image>(imageDTO);
-            
+            List<Image> images = new List<Image>();
+
             if (_context.Images == null)
           {
               return Problem("Entity set 'caribbeanrentContext.Images'  is null.");
           }
 
-            if (!RentPostsController.RentPostExists(_context,image.IdrentPost))
+            if (!RentPostsController.RentPostExists(_context, imageDTO.IdrentPost))
           {
                 return NotFound("No existe una publicación de alquiler con este ID");
           }
-
-            var uploadResult = await ImageHelper.UploadHelper(_service, containerName, imageDTO.File);
-            image.Urlimage = uploadResult;
-
-            _context.Images.Add(image);
+            foreach(IFormFile file in imageDTO.Files)
+            {
+                var uploadResult = await ImageHelper.UploadHelper(_service, containerName, file);
+                images.Add(new Image() { IdrentPost=imageDTO.IdrentPost, Urlimage= uploadResult });  
+            }
+            await _context.Images.AddRangeAsync(images);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetImage", new { id = image.Idimage }, image);
+            return Created("api/Images", images);
         }
 
         // DELETE: api/Images/5

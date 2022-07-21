@@ -6,6 +6,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using WebAPI.Helpers;
 using WebAPI.Models;
 using WebAPI.Models.DTO;
 
@@ -97,7 +98,9 @@ namespace WebAPI.Controllers
           {
               return Problem("Entity set 'caribbeanrentContext.Services'  is null.");
           }
+            service.State = Convert.ToInt32(StateEnums.Active);
             _context.Services.Add(service);
+
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetService", new { id = service.Idservice }, service);
@@ -116,8 +119,9 @@ namespace WebAPI.Controllers
             {
                 return NotFound();
             }
+            service.State= Convert.ToInt32(StateEnums.Inactive);
+            _context.Services.Update(service);
 
-            _context.Services.Remove(service);
             await _context.SaveChangesAsync();
 
             return NoContent();

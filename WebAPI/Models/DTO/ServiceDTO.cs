@@ -4,5 +4,6 @@
     {
         public int Idservice { get; set; }
         public string Name { get; set; } = null!;
+        public int? State { get; set; }
     }
 }

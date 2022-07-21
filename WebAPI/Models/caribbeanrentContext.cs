@@ -348,8 +348,6 @@ namespace WebAPI.Models
 
                 entity.Property(e => e.IdrentPost).HasColumnName("IDRentPost");
 
-                entity.Property(e => e.Price).HasColumnType("decimal(18, 0)");
-
                 entity.HasOne(d => d.IdrentPostNavigation)
                     .WithMany(p => p.SpecificationRentPosts)
                     .HasForeignKey(d => d.IdrentPost)

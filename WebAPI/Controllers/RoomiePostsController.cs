@@ -6,6 +6,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using WebAPI.Helpers;
 using WebAPI.Models;
 using WebAPI.Models.DTO;
 
@@ -32,7 +33,7 @@ namespace WebAPI.Controllers
           {
               return NotFound();
           }
-            return await _context.RoomiePosts.ToListAsync();
+            return await _context.RoomiePosts.Include("RoomiePostServices").ToListAsync();
         }
 
         // GET: api/RoomiePosts/5
@@ -43,7 +44,9 @@ namespace WebAPI.Controllers
           {
               return NotFound();
           }
-            var roomiePost = await _context.RoomiePosts.FindAsync(id);
+            var roomiePost = await _context.RoomiePosts
+                .Include("RoomiePostServices")
+                .FirstOrDefaultAsync(x => x.IdroomiePost == id); ;
 
             if (roomiePost == null)
             {
@@ -102,6 +105,7 @@ namespace WebAPI.Controllers
 
             roomiePost.DateCreated = dateCreated;
             roomiePost.UpdatePost = dateCreated;
+            roomiePost.State = Convert.ToInt32(StateEnums.Active);
 
             _context.RoomiePosts.Add(roomiePost);
             await _context.SaveChangesAsync();
@@ -122,8 +126,9 @@ namespace WebAPI.Controllers
             {
                 return NotFound();
             }
+            roomiePost.State= Convert.ToInt32(StateEnums.Inactive);
+            _context.RoomiePosts.Update(roomiePost);
 
-            _context.RoomiePosts.Remove(roomiePost);
             await _context.SaveChangesAsync();
 
             return NoContent();

@@ -91,16 +91,21 @@ namespace WebAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<RoomiePostService>> PostRoomiePostService(RoomiePostServiceDTO roomiePostServiceDTO)
         {
-            RoomiePostService roomiePostService = _mapper.Map<RoomiePostServiceDTO, RoomiePostService>(roomiePostServiceDTO);
+            List<RoomiePostService> listServices = new List<RoomiePostService>();
 
             if (_context.RoomiePostServices == null)
           {
               return Problem("Entity set 'caribbeanrentContext.RoomiePostServices'  is null.");
           }
-            _context.RoomiePostServices.Add(roomiePostService);
+
+         foreach (int idService in roomiePostServiceDTO.listIdServices)
+          {
+           listServices.Add(new RoomiePostService() { IdroomiePost = roomiePostServiceDTO.IdroomiePost, Idservice = idService });
+          }
+            await _context.RoomiePostServices.AddRangeAsync(listServices);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetRoomiePostService", new { id = roomiePostService.IdroomieService }, roomiePostService);
+            return Created("api/RoomiePostService", listServices);
         }
 
         // DELETE: api/RoomiePostServices/5

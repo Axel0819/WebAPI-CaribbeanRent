@@ -14,6 +14,7 @@ namespace WebAPI.Models
 
         public int Idservice { get; set; }
         public string Name { get; set; } = null!;
+        public int? State { get; set; }
 
         [JsonIgnore]
         public virtual ICollection<RentPostService> RentPostServices { get; set; }

@@ -33,7 +33,12 @@ namespace WebAPI.Controllers
           {
               return NotFound();
           }
-            return await _context.RentPosts.ToListAsync();
+            return await _context.RentPosts
+                .Include("Images")
+                .Include("RentPostServices")
+                .Include("RentRules")
+                .Include("SpecificationRentPosts")
+                .ToListAsync();
         }
 
         // GET: api/RentPosts/5
@@ -44,7 +49,11 @@ namespace WebAPI.Controllers
           {
               return NotFound();
           }
-            var rentPost = await _context.RentPosts.FindAsync(id);
+            var rentPost = await _context.RentPosts.Include("Images")
+                            .Include("RentPostServices")
+                            .Include("RentRules")
+                            .Include("SpecificationRentPosts")
+                            .FirstOrDefaultAsync(x=> x.IdrentPost == id);
 
             if (rentPost == null)
             {
@@ -119,8 +128,9 @@ namespace WebAPI.Controllers
             {
                 return NotFound();
             }
+            rentPost.State= Convert.ToInt32(StateEnums.Inactive);
+            _context.RentPosts.Update(rentPost);
 
-            _context.RentPosts.Remove(rentPost);
             await _context.SaveChangesAsync();
 
             return NoContent();

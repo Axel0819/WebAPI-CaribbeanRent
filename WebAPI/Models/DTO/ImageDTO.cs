@@ -5,6 +5,6 @@
         public int Idimage { get; set; }
         public int IdrentPost { get; set; }
         public string? Urlimage { get; set; }
-        public IFormFile File { get; set; }=null!;
+        public ICollection<IFormFile> Files { get; set; } = new List<IFormFile>();
     }
 }

@@ -33,7 +33,13 @@ namespace WebAPI.Controllers
             {
                 return NotFound();
             }
-            return await _context.UserCrs.ToListAsync();
+            return await _context.UserCrs
+                           .Include("Contacts")
+                           .Include("Favorites")
+                           .Include("InfoUsers")
+                           .Include("RentPosts")
+                           .Include("RoomiePosts")
+                           .ToListAsync();
         }
 
         // GET: api/UserCrs/5
@@ -44,7 +50,13 @@ namespace WebAPI.Controllers
             {
                 return NotFound();
             }
-            var userCr = await _context.UserCrs.FindAsync(id);
+            var userCr = await _context.UserCrs
+                               .Include("Contacts")
+                               .Include("Favorites")
+                               .Include("InfoUsers")
+                               .Include("RentPosts")
+                               .Include("RoomiePosts")
+                               .FirstOrDefaultAsync(user=> user.Uid == id);
 
             if (userCr == null)
             {
@@ -136,8 +148,9 @@ namespace WebAPI.Controllers
             {
                 return NotFound();
             }
-
-            _context.UserCrs.Remove(userCr);
+            userCr.State=Convert.ToInt32(StateEnums.Inactive);
+            _context.UserCrs.Update(userCr);
+            
             await _context.SaveChangesAsync();
 
             return NoContent();
